@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bisrat Hilete</title>
+<meta name="description" content="Bisrat Hilete. Dancer. Builder. Filmmaker. UNLV senior, 3x national champion, maker of things.">
+<style>
+  @font-face {
+    font-family: "Gloock";
+    src: url("fonts/Gloock-Regular.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Basement Grotesque";
+    src: url("fonts/BasementGrotesque-Black_v1.202.otf") format("opentype");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "DIN Condensed";
+    src: url("fonts/DINCondensed-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Bodoni 72 Oldstyle";
+    src: local("Bodoni 72 Oldstyle"), local("Bodoni72Oldstyle-Book"), local("Bodoni 72 Oldstyle Book");
+    font-weight: 400;
+    font-display: swap;
+  }
+  :root {
+    --red: #e10600;
+    --red-deep: #8a0a0a;
+    --black: #0a0a0a;
+    --g950: #111111;
+    --g900: #161616;
+    --g850: #1c1c1c;
+    --g700: #333333;
+    --g400: #8c8c8c;
+    --g300: #adadad;
+    --g200: #cfcfcf;
+    --text: #ededed;
+    --muted: #8c8c8c;
+    --border: #2a2a2a;
+    --font-statement: "Gloock", Didot, Georgia, serif;
+    --font-impact: "Basement Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --font-label: "DIN Condensed", "Arial Narrow", Arial, sans-serif;
+    --font-editorial: "Bodoni 72 Oldstyle", Georgia, serif;
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--black);
+    color: var(--text);
+    font-family: var(--font-editorial);
+    font-size: 17px;
+    line-height: 1.6;
+    overflow-x: clip;
+    padding-top: 60px;
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    opacity: .5;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+  a { color: var(--text); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .label {
+    font-family: var(--font-label);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .label .n { color: var(--red); margin-right: 12px; }
+  nav.top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 90;
+    background: rgba(10,10,10,.94);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav.top .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .brand {
+    font-family: var(--font-label);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: .24em;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .brand b { color: var(--red); font-weight: 700; }
+  nav.top .links { display: flex; gap: 4px; }
+  nav.top .links a {
+    font-family: var(--font-label);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .2em;
+    text-decoration: none;
+    color: var(--muted);
+    transition: color .2s var(--ease);
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 10px;
+  }
+  nav.top .links a:hover { color: var(--red); }
+  .menu-btn {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0;
+  }
+  .menu-btn span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--text);
+  }
+  .menu-btn span.mid { background: var(--red); }
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(10,10,10,.97);
+    display: flex;
+    flex-direction: column;
+    padding: 16px 24px 40px;
+    transform: translateY(-102%);
+    transition: transform .32s var(--ease), visibility .32s;
+    visibility: hidden;
+  }
+  .menu-toggle {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  body.menu-open .overlay { transform: translateY(0); visibility: visible; }
+  body.menu-open { overflow: hidden; }
+  #menuToggle:checked ~ .overlay { transform: translateY(0); visibility: visible; }
+  body:has(#menuToggle:checked) { overflow: hidden; }
+  .overlay .top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .overlay .close-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .overlay nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+  }
+  .overlay nav a {
+    font-family: var(--font-impact);
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: clamp(32px, 9vw, 48px);
+    line-height: 1.2;
+    color: var(--text);
+    text-decoration: none;
+    padding: 12px 0;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .overlay nav a .n {
+    font-family: var(--font-label);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: .24em;
+    color: var(--red);
+    margin-right: 16px;
+    min-width: 32px;
+  }
+  .overlay nav a:active { color: var(--red); }
+  section.block { scroll-margin-top: 76px; }
+  .hero { scroll-margin-top: 60px; }
+  @media (max-width: 860px) {
+    nav.top .links { display: none; }
+    .menu-btn { display: inline-flex; }
+  }
+  @media (min-width: 861px) {
+    .overlay { display: none; }
+  }
+  .hero {
+    border-top: 12px solid #000;
+    border-bottom: 12px solid #000;
+    padding: clamp(48px, 9vw, 110px) 0 clamp(40px, 7vw, 84px);
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(225,6,0,.10), transparent 60%),
+      var(--black);
+  }
+  .hero .label { margin-bottom: 20px; display: block; }
+  .hero h1 {
+    font-family: var(--font-statement);
+    font-weight: 400;
+    color: var(--red);
+    font-size: clamp(64px, 14vw, 168px);
+    line-height: .92;
+    letter-spacing: -.01em;
+    margin: 0 0 28px;
+  }
+  .hero .stack {
+    font-family: var(--font-impact);
+    font-weight: 900;
+    font-size: clamp(34px, 7vw, 76px);
+    line-height: 1.02;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .hero .stack span { display: block; }
+  .hero .lede {
+    margin-top: 28px;
+    font-size: 20px;
+    max-width: 34ch;
+    color: var(--g200);
+  }
+  section.block { padding: clamp(48px, 8vw, 96px) 0; border-top: 1px solid var(--border); }
+  section.block .label { display: block; margin-bottom: 18px; }
+  section.block h2 {
+    font-family: var(--font-impact);
+    font-weight: 900;
+    font-size: clamp(40px, 8vw, 84px);
+    line-height: 1;
+    text-transform: uppercase;
+    margin: 0 0 24px;
+  }
+  section.block h2 .r { color: var(--red); }
+  .prose { max-width: 68ch; }
+  .prose p { margin: 0 0 18px; font-size: 18px; color: var(--g200); }
+  .prose p strong { color: var(--text); font-weight: 700; }
+  .prose a { color: var(--text); text-decoration-color: var(--red); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .prose a:hover { color: var(--red); }
+  .timeline { margin: 32px 0 0; padding: 0; list-style: none; }
+  .timeline li {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+  }
+  .timeline li:last-child { border-bottom: 1px solid var(--border); }
+  .timeline .role {
+    font-family: var(--font-impact);
+    font-weight: 900;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: .01em;
+  }
+  .timeline .meta {
+    font-family: var(--font-label);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .timeline .desc { color: var(--muted); font-size: 16px; max-width: 62ch; }
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  @media (min-width: 640px) {
+    .cards { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .cards { grid-template-columns: repeat(3, 1fr); }
+  }
+  .card {
+    background: var(--g900);
+    border: 1px solid var(--border);
+    padding: 24px;
+    transition: border-color .22s var(--ease), transform .22s var(--ease);
+  }
+  .card:hover { border-color: var(--red); transform: translateY(-2px); }
+  .card h3 {
+    font-family: var(--font-impact);
+    font-weight: 900;
+    font-size: 19px;
+    text-transform: uppercase;
+    margin: 0 0 4px;
+  }
+  .card .tag {
+    font-family: var(--font-label);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--red);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .card p { margin: 0; color: var(--muted); font-size: 16px; }
+  .honors { margin: 32px 0 0; padding: 0; list-style: none; }
+  .honors li {
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+  }
+  .honors li:last-child { border-bottom: 1px solid var(--border); }
+  .honors .yr {
+    font-family: var(--font-label);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: .18em;
+    color: var(--red);
+    white-space: nowrap;
+    min-width: 92px;
+  }
+  .honors .what { color: var(--g200); font-size: 17px; }
+  @media (max-width: 560px) {
+    .honors li { flex-direction: column; gap: 4px; }
+    .honors .yr { min-width: 0; }
+  }
+  .contactbox {
+    background: var(--g900);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    padding: 28px;
+    margin-top: 28px;
+  }
+  .contactbox p { margin: 0 0 12px; font-size: 18px; }
+  .contactbox p:last-child { margin-bottom: 0; }
+  .contactbox a { color: var(--text); text-decoration-color: var(--red); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .contactbox a:hover { color: var(--red); }
+  .contactbox .k {
+    font-family: var(--font-label);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: inline-block;
+    min-width: 96px;
+  }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0 56px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer .bh { font-family: var(--font-label); font-weight: 700; letter-spacing: .24em; color: var(--red); }
+</style>
+</head>
+<body>
+
+<input type="checkbox" id="menuToggle" class="menu-toggle" tabindex="-1" aria-hidden="true">
+<nav class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><b>BH.</b> BISRAT HILETE</a>
+    <div class="links">
+      <a href="#about">ABOUT</a>
+      <a href="#dance">DANCE</a>
+      <a href="#work">WORK</a>
+      <a href="#builds">BUILDS</a>
+      <a href="#honors">HONORS</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+    <label for="menuToggle" class="menu-btn" aria-label="Open menu">
+      <span></span><span class="mid"></span><span></span>
+    </label>
+  </div>
+</nav>
+
+<div class="overlay" id="menuOverlay">
+  <div class="top-row">
+    <span class="brand"><b>BH.</b>&nbsp;BISRAT HILETE</span>
+    <label for="menuToggle" class="close-btn" aria-label="Close menu">&times;</label>
+  </div>
+  <nav>
+    <a href="#about"><span class="n">01</span>About</a>
+    <a href="#dance"><span class="n">02</span>Dance</a>
+    <a href="#work"><span class="n">03</span>Work</a>
+    <a href="#builds"><span class="n">04</span>Builds</a>
+    <a href="#honors"><span class="n">05</span>Honors</a>
+    <a href="#contact"><span class="n">06</span>Contact</a>
+  </nav>
+</div>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <span class="label">Personal portfolio</span>
+    <h1>BISRAT<br>HILETE</h1>
+    <p class="stack"><span>Dancer.</span><span>Builder.</span><span>Filmmaker.</span></p>
+    <p class="lede">I am a UNLV senior who dances, builds software, and makes films. This is me as a whole.</p>
+  </div>
+</header>
+
+<section class="block" id="about">
+  <div class="wrap">
+    <span class="label"><span class="n">01</span>About</span>
+    <h2>Hi, I am <span class="r">Bisrat.</span></h2>
+    <div class="prose">
+      <p>I am a senior at UNLV in the Howard R. Hughes College of Engineering, majoring in Computer Science with a minor in Information Systems. I graduate in May 2027.</p>
+      <p>I am of Ethiopian heritage and a first generation college student. I am a builder at heart. I like building things for problems I'd like to get solved.</p>
+      <p>My work lives at the crossing of movement, media, and software: competitive dance, photo and film, and the things I build in the open.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="dance">
+  <div class="wrap">
+    <span class="label"><span class="n">02</span>Dance</span>
+    <h2>I care about<br>my <span class="r">process.</span></h2>
+    <div class="prose">
+      <p>I picked up dancing later in life, so everything I have in movement I earned through reps. I danced with the <strong>UNLV Rebel Girls and Company</strong> from April 2023 to May 2026. We became <strong>3x national champions</strong>, and I won <strong>gold with Team USA at the ICU World Championship in 2025</strong>.</p>
+      <p>Before college I danced with the <strong>Diamondback Dance Crew</strong> at Desert Oasis High School, where we won the NDA national title in Medium Varsity Hip Hop in 2023.</p>
+      <p>I teach dance too. From November 2024 to March 2026 I was a dance instructor at Captivation Dance Affiliates, choreographing weekly for kids from kindergarten through 12th grade.</p>
+      <p>This winter I am doing a <strong>7 week solo intensive</strong>, relearning championship routines from the best crews in the world and closing with my own team's routines.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="work">
+  <div class="wrap">
+    <span class="label"><span class="n">03</span>Work</span>
+    <h2>Work that<br>ships<span class="r">.</span></h2>
+    <div class="prose">
+      <p>I am the <strong>Head of Content and Media Intern</strong> at Tomorrow's Stars Foundation, where I have worked since May 2026. I built their employee hub and rebuilt their website.</p>
+      <p>I made <strong>Hillside Visuals</strong> to house the visual work I care about: photo, video, websites, graphics, and flyers.</p>
+    </div>
+    <ul class="timeline">
+      <li>
+        <span class="role">Head of Content and Media Intern</span>
+        <span class="meta">Tomorrow's Stars Foundation, May 2026 to present</span>
+        <span class="desc">I built the staff employee hub and rebuilt the organization's website.</span>
+      </li>
+      <li>
+        <span class="role">Content and Media Intern</span>
+        <span class="meta">NBA X Summer League, June 2026</span>
+        <span class="desc">Photographer, videographer, and media manager.</span>
+      </li>
+      <li>
+        <span class="role">Dance Instructor</span>
+        <span class="meta">Captivation Dance Affiliates, Nov 2024 to Mar 2026</span>
+        <span class="desc">Weekly choreography for kids from kindergarten through 12th grade.</span>
+      </li>
+      <li>
+        <span class="role">Social Media Team Manager</span>
+        <span class="meta">UNLV Rebel Girls and Company, Aug 2024 to May 2026</span>
+        <span class="desc">Flyers, reels, and posting ideas for the team.</span>
+      </li>
+      <li>
+        <span class="role">Super Bowl Performer</span>
+        <span class="meta">CBS Sports Paramount Mountain, Mar 5, 2024</span>
+        <span class="desc">I danced in CBS Spirit uniforms across the attraction for the Las Vegas Super Bowl.</span>
+      </li>
+      <li>
+        <span class="role">Mentee</span>
+        <span class="meta">Rebels Hand In Hand, Aug 2023 to Apr 2024</span>
+        <span class="desc">Mentorship program pairing student athletes with guidance and community.</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="block" id="builds">
+  <div class="wrap">
+    <span class="label"><span class="n">04</span>Builds</span>
+    <h2>Things<br>I've <span class="r">made.</span></h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Hillside Mind</h3>
+        <span class="tag">AI system</span>
+        <p>My personal AI memory system. Local first, so my data stays mine.</p>
+      </div>
+      <div class="card">
+        <h3>Hillside Helm</h3>
+        <span class="tag">AI workers</span>
+        <p>Bounded AI workers that do real work with approval gates. I stay in charge.</p>
+      </div>
+      <div class="card">
+        <h3>Hillside Labs</h3>
+        <span class="tag">Software</span>
+        <p>Software I build in the open. Open source first, honest about money.</p>
+      </div>
+      <div class="card">
+        <h3>Boondle</h3>
+        <span class="tag">Study app</span>
+        <p>A spaced repetition study app I built for myself. Live on the web.</p>
+      </div>
+      <div class="card">
+        <h3>Anti Cheat Prototype</h3>
+        <span class="tag">Prototype</span>
+        <p>A behavioral engine that scores players on bot likelihood from input telemetry. Layer one of a bigger idea.</p>
+      </div>
+      <div class="card">
+        <h3>Selam Amharic</h3>
+        <span class="tag">Language app</span>
+        <p>An app I made to learn Amharic, the language my parents speak.</p>
+      </div>
+      <div class="card">
+        <h3>PromptForge</h3>
+        <span class="tag">Tool</span>
+        <p>A self improving prompt tool for getting more out of AI models.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="honors">
+  <div class="wrap">
+    <span class="label"><span class="n">05</span>Honors</span>
+    <h2>Proof of<br><span class="r">work.</span></h2>
+    <ul class="honors">
+      <li><span class="yr">Scholar</span><span class="what">UNLV Opportunity Scholarship</span></li>
+      <li><span class="yr">Scholar</span><span class="what">Millennium Scholarship</span></li>
+      <li><span class="yr">Jan 2026</span><span class="what">1st Place, D1A Hip Hop, UDA College Nationals, ESPN Wide World of Sports</span></li>
+      <li><span class="yr">Jan 2026</span><span class="what">1st Place, D1A Gameday, UDA College Nationals, ESPN Wide World of Sports</span></li>
+      <li><span class="yr">Jan 2025</span><span class="what">1st Place, D1A Hip Hop, UDA College Nationals, ESPN Wide World of Sports</span></li>
+      <li><span class="yr">Jan 2025</span><span class="what">1st Place, D1A Gameday, UDA College Nationals, ESPN Wide World of Sports</span></li>
+      <li><span class="yr">Jan 2024</span><span class="what">2nd Place, D1A Hip Hop, UDA College Nationals, ESPN Wide World of Sports</span></li>
+      <li><span class="yr">Mar 2023</span><span class="what">1st Place, NDA National Champion, Medium Varsity Hip Hop, Diamondback Dance Crew, Desert Oasis High School</span></li>
+      <li><span class="yr">2023</span><span class="what">Regional first place finishes with Diamondback Dance Crew</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="block" id="contact">
+  <div class="wrap">
+    <span class="label"><span class="n">06</span>Contact</span>
+    <h2>Say<br><span class="r">hello.</span></h2>
+    <div class="contactbox">
+      <p><span class="k">Email</span><a href="mailto:hiletebisrat@gmail.com">hiletebisrat@gmail.com</a></p>
+      <p><span class="k">Media</span><a href="mailto:hillsidevisuals@gmail.com">hillsidevisuals@gmail.com</a></p>
+      <p><span class="k">School</span><a href="mailto:hiletb1@unlv.nevada.edu">hiletb1@unlv.nevada.edu</a></p>
+      <p><span class="k">Instagram</span><a href="https://www.instagram.com/bisrathilete">@bisrathilete</a> and <a href="https://www.instagram.com/hillsidevisuals">@hillsidevisuals</a></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Bisrat Hilete. Built with my own design system.</span>
+    <span class="bh">BH.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var toggle = document.getElementById('menuToggle');
+  var overlay = document.getElementById('menuOverlay');
+  if (!toggle || !overlay) { return; }
+  overlay.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { toggle.checked = false; });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { toggle.checked = false; }
+  });
+})();
+</script>
+
+</body>
+</html>
