@@ -113,6 +113,8 @@
     min-height: 44px;
   }
   .brand b { color: var(--red); font-weight: 700; }
+  .brand .bhmark { height: 26px; width: auto; margin-right: 10px; flex: 0 0 auto; }
+  footer .bhmark { height: 30px; width: auto; }
   nav.top .links { display: flex; gap: 4px; }
   nav.top .links a {
     font-family: var(--font-label);
@@ -401,7 +403,7 @@
 <input type="checkbox" id="menuToggle" class="menu-toggle" tabindex="-1" aria-hidden="true">
 <nav class="top">
   <div class="wrap">
-    <a class="brand" href="#top"><b>BH.</b> BISRAT HILETE</a>
+    <a class="brand" href="#top"><img class="bhmark" src="bh.png" alt="BH.">BISRAT HILETE</a>
     <div class="links">
       <a href="#about">ABOUT</a>
       <a href="#dance">DANCE</a>
@@ -418,7 +420,7 @@
 
 <div class="overlay" id="menuOverlay">
   <div class="top-row">
-    <span class="brand"><b>BH.</b>&nbsp;BISRAT HILETE</span>
+    <span class="brand"><img class="bhmark" src="bh.png" alt="BH.">&nbsp;BISRAT HILETE</span>
     <label for="menuToggle" class="close-btn" aria-label="Close menu">&times;</label>
   </div>
   <nav>
@@ -586,7 +588,7 @@
 <footer>
   <div class="wrap">
     <span>© 2026 Bisrat Hilete. Built with my own design system.</span>
-    <span class="bh">BH.</span>
+    <img class="bhmark" src="bh.png" alt="BH.">
   </div>
 </footer>
 
